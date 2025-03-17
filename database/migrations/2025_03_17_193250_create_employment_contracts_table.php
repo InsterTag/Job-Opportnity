@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('employment_contracts', function (Blueprint $table) {
             $table->id();
+            //pruebaaaaa
             $table->timestamps();
         });
     }
