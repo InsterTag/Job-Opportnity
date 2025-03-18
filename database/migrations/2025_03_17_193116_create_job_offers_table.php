@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('email');
             $table->string('address');
             $table->decimal('payment', 10, 2);
-            $table->text('description');
-            $table->unsignedBigInteger('company_id')->nullable();
+            $table->string('title')->nullable(false);
+            $table->text('description')->nullable(false);
+            $table->decimal('salary', 10, 2)->unsigned();
+            $table->string('location')->nullable(false);
+            $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies')
-                ->onDelete('set null');
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
