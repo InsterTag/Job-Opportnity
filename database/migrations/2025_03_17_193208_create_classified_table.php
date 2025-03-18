@@ -6,22 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('job_classified', function (Blueprint $table) {
+        Schema::create('classifieds', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
+            $table->integer('phone');
+            $table->string('email');
+            $table->string('address');
+            $table->decimal('payment');
+            $table->text('description');
+
+            $table->unsignedBigInteger('job_offers_id')->nullable();
+
+            $table->foreign('job_offers_id')
+            ->references('id')
+            ->on('job_offers')
+            ->onDelete('set null');
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('job_classified');
+        Schema::dropIfExists('classifieds');
     }
 };
