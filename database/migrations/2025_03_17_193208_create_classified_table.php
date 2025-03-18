@@ -6,10 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
-        Schema::create('employment_contracts', function (Blueprint $table) {
+        Schema::create('classifieds', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
@@ -30,9 +29,8 @@ return new class extends Migration
         });
     }
 
-    
     public function down(): void
     {
-        Schema::dropIfExists('employment_contracts');
+        Schema::dropIfExists('classifieds');
     }
 };
