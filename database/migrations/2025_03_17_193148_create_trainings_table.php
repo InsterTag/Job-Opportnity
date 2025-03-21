@@ -12,8 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('job_trainings', function (Blueprint $table) {
-            $table->id();
-            //
+            $table->id(); 
+
+            $table->string('title');
+            $table->string('start_date');
+            $table->string('end_date');
+            $table->text('description');
+
+            $table->unsignedBigInteger('unemployed_id')->nullable(); 
+
+            $table->foreign('unemployed_id')
+            ->references('id')
+            ->on('unemployed')
+            ->onDelete('set null');
+
             $table->timestamps();
         });
     }

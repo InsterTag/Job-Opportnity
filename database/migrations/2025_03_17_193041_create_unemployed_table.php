@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('unemployed', function (Blueprint $table) {
             $table->id();
+
+            $table->text('description');
+            $table->text('work experience');
+            $table->string('skills');
+            $table->string('education');
+            $table->string('availability');
+
+            $table->unsignedBigInteger('user_id')->nullable();
+
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('set null');
             $table->timestamps();
         });
     }
