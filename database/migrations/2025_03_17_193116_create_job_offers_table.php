@@ -13,20 +13,22 @@ return new class extends Migration
     {
         Schema::create('job_offers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('address');
-            $table->decimal('payment', 10, 2);
-            $table->string('title')->nullable(false);
-            $table->text('description')->nullable(false);
-            $table->decimal('salary', 10, 2)->unsigned();
-            $table->string('location')->nullable(false);
-            $table->unsignedBigInteger('company_id');
+
+            $table->string('tittle');
+            $table->text('description');
+            $table->string('requirements');
+            $table->integer('salary');
+            $table->string('publication date');
+            $table->string('completion date');
+
+            $table->unsignedBigInteger('company_id')->nullable();
+
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies')
-                ->onDelete('cascade');
+                ->onDelete('set null');
+                
+
             $table->timestamps();
         });
     }

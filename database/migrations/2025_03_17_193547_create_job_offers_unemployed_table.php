@@ -6,31 +6,34 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('classifieds', function (Blueprint $table) {
+        Schema::create('job_offers_unemployed', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->integer('phone');
-            $table->string('email');
-            $table->string('address');
-            $table->decimal('payment');
-            $table->text('description');
-
+            $table->unsignedBigInteger('unemploy_id')->nullable();
             $table->unsignedBigInteger('job_offers_id')->nullable();
+
+            $table->foreign('unemploy_id')
+            ->references('id')
+            ->on('unemployed')->onDelete('cascade');
 
             $table->foreign('job_offers_id')
             ->references('id')
-            ->on('job_offers')
-            ->onDelete('set null');
+            ->on('job_offers')->onDelete('cascade');
 
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('classifieds');
+        Schema::dropIfExists('job_offers_unemployed');
     }
 };
