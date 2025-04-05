@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('location');
-            $table->string('type of company');
+            $table->string('type_of_company');
             $table->string('contact');
 
             $table->unsignedBigInteger('user_id')->nullable();

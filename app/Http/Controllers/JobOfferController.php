@@ -15,13 +15,19 @@ class JobOfferController extends Controller
     public function agg_joboffer(Request $request)
     {
         $jobOffer = new JobOffer();
-        $jobOffer->title = $request->title; // Asegúrate de que el campo 'title' esté en el formulario
-        $jobOffer->description = $request->description; // Agrega otros campos según sea necesario
-        $jobOffer->company_id = $request->company_id; // Asegúrate de que el campo 'company_id' esté en el formulario
+        $jobOffer->title = $request->title; 
+        $jobOffer->description = $request->description; 
+        $jobOffer->requirements = $request->requirements;
         $jobOffer->salary = $request->salary;
-        $jobOffer->location = $request->location;
+        $jobOffer->publication_date = $request->publication_date;
+        $jobOffer->completion_date = $request->completion_date;
 
         $jobOffer->save();
-        return $jobOffer; // O redirige a otra página según tu necesidad
+        return $jobOffer; 
+    }
+    public function consultasJO()
+    {
+        $jobOffer = JobOffer::find(1); // Busca la oferta con ID 1
+        return $jobOffer->company; // Devuelve las ofertas de trabajo de la compañía
     }
 } 

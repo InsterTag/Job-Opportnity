@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('job_offers', function (Blueprint $table) {
             $table->id();
 
-            $table->string('tittle');
+            $table->string('title');
             $table->text('description');
             $table->string('requirements');
             $table->integer('salary');
-            $table->string('publication date');
-            $table->string('completion date');
+            $table->string('publication_date');
+            $table->string('completion_date');
 
             $table->unsignedBigInteger('company_id')->nullable();
 

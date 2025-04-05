@@ -6,9 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    // Definición de la relación con JobOffer
-    public function jobOffer()
+    protected $table = 'companies';
+
+    // Relación con JobOffer (uno a muchos)
+    public function jobOffers()
     {
-        return $this->hasMany('App\Models\JobOffer');
+        return $this->belongsTo(JobOffer::class, 'id');
+    }
+
+    // Relación con User (opcional, si una compañía pertenece a un usuario)
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

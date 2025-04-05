@@ -10,6 +10,8 @@ Route::get('/', function () {
 
 // Ruta para consultas de compañías
 Route::get('/consultasCompany', [CompanyController::class, 'consultasCom']);
+// Ruta para consultas de ofertas de trabajo
+Route::get('/consultasJobOffer', [JobOfferController::class, 'consultasJO']);
 
 // Rutas para Company
 Route::get('/formularioCompania', [CompanyController::class, 'create']);
