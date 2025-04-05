@@ -54,13 +54,6 @@
         </label>
         <br><br>
 
-        <label>
-            ID de la Compañía:
-            <br>
-            <input type="number" name="company_id" required>
-        </label>
-        <br><br>
-
         <button type="submit">Enviar Formulario</button>
     </form>
 

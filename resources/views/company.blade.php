@@ -47,20 +47,6 @@
         </label>
         <br><br>
 
-        <label>
-            Dirección:
-            <br>
-            <input type="text" name="address" required>
-        </label>
-        <br><br>
-
-        <label>
-            Correo Electrónico:
-            <br>
-            <input type="email" name="email" required>
-        </label>
-        <br><br>
-
         <button type="submit">Enviar Formulario</button>
     </form>
 
