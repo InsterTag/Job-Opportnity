@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 
-//Rutas para la vista 
+//Rutas para la vista
 Route::view('/login', 'login')->name('login');
 Route::view('/home', 'home')->middleware('auth')->name('home');
 
@@ -25,3 +25,21 @@ Route::get('/unemployed-form', [UnemployedController::class, 'create'])->name('u
 Route::post('/agg-unemployed', [UnemployedController::class, 'agg_unemployed'])->name('agg-unemployed');
 Route::get('/company-form', [CompanyController::class, 'create'])->name('company-form');
 Route::post('/agg-company', [CompanyController::class, 'agg_company'])->name('agg-company');
+
+
+
+Route::middleware('auth')->group(function () {
+    // Ver la lista de portafolios
+    Route::get('/portfolio-list', [PortfolioController::class, 'list'])->name('portfolio-list');
+
+    // Crear un nuevo portafolio
+    Route::get('/portfolio-form', [PortfolioController::class, 'create'])->name('portfolio-form');
+    Route::post('/agg-portfolio', [PortfolioController::class, 'store'])->name('agg-portfolio');
+
+    // Editar un portafolio
+    Route::get('/portfolio-edit/{id}', [PortfolioController::class, 'edit'])->name('edit-portfolio');
+    Route::post('/portfolio-update/{id}', [PortfolioController::class, 'update'])->name('update-portfolio');
+
+    // Eliminar un portafolio
+    Route::delete('/portfolio-delete/{id}', [PortfolioController::class, 'destroy'])->name('delete-portfolio');
+});

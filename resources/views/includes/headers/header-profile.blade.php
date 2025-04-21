@@ -38,7 +38,7 @@
                         <i class="fas fa-chevron-down ml-2"></i>
                     </button>
                     <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-50">
-                        <a href="" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Mi Perfil</a>
+                        <a href="{{ route('portfolio-list') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Portafolio</a>
                         <a href="{{ route('messages') }}" class="relative block px-4 py-2 text-gray-700 hover:bg-gray-100">Mensajes</a>
                         <a href="" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Configuración</a>
                         <hr class="my-2">
