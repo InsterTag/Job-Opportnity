@@ -8,12 +8,14 @@ use App\Models\JobOffer;
 
 class FavoriteOffer extends Model
 {
-    public function Unemployed()
+    protected $fillable = ['unemployed_id', 'job_offer_id'];
+    
+    public function unemployed()
     {
         return $this->belongsTo(Unemployed::class);
     }
 
-    public function JobOffer()
+    public function jobOffer()
     {
         return $this->belongsTo(JobOffer::class);
     }

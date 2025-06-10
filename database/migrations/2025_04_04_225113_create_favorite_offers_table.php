@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('favorite_offers', function (Blueprint $table) {
-            $table->unsignedBigInteger('unemployed_id');
-        $table->unsignedBigInteger('job_offer_id');
-        $table->timestamp('added_at')->useCurrent();
-
-        $table->foreign('unemployed_id')->references('id')->on('unemployeds')->onDelete('cascade');
-        $table->foreign('job_offer_id')->references('id')->on('job_offers')->onDelete('cascade');
+            $table->foreignId('unemployed_id')->constrained('unemployeds')->onDelete('cascade');
+            $table->foreignId('job_offer_id')->constrained()->onDelete('cascade');
+            $table->timestamp('added_at')->useCurrent();
+            $table->timestamps();
+            
+            $table->primary(['unemployed_id', 'job_offer_id']);
         });
     }
 

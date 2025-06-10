@@ -39,28 +39,15 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
+    public function isCompany(): bool
+    {
+        return $this->type === 'company';
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function isUnemployed(): bool
+    {
+        return $this->type === 'unemployed';
+    }
 
 
 
@@ -86,6 +73,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**

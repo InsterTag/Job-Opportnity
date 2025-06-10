@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\TrainingUser;
 
 class Training extends Model
 {
-    public function TrainingUsers()
-    {
-        return $this->hasMany(TrainingUser::class);
-    }
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'link',
+        'provider',
+        'start_date',
+        'end_date',
+    ];
 }
-    

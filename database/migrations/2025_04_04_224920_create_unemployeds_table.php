@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('unemployeds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('profession')->nullable();
-            $table->text('experience')->nullable();
-            $table->string('location')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('profession');
+            $table->text('experience');
+            $table->string('location');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

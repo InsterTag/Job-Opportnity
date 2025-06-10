@@ -11,6 +11,7 @@ use App\Models\TrainingUser;
 
 class Unemployed extends Model
 {
+
     public function User()
     {
         return $this->belongsTo(User::class);
@@ -26,9 +27,10 @@ class Unemployed extends Model
         return $this->hasMany(Portfolio::class);
     }
 
-    public function FavoriteOffers()
+    public function favoriteOffers()
     {
-        return $this->hasMany(FavoriteOffer::class);
+        return $this->belongsToMany(JobOffer::class, 'favorite_offers', 'unemployed_id', 'job_offer_id')
+                    ->withTimestamps();
     }
 
     public function TrainingUsers()
