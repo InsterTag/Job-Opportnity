@@ -42,4 +42,12 @@ Route::middleware('auth')->group(function () {
 
     // Eliminar un portafolio
     Route::delete('/portfolio-delete/{id}', [PortfolioController::class, 'destroy'])->name('delete-portfolio');
+
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'list'])->name('category-list');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('category-create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('category-store');
+    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('category-edit');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category-update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category-delete');
 });
