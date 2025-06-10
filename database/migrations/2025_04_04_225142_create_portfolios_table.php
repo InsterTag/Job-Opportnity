@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('unemployed_id');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('file_url');
+            $table->string('url_proyect');
+            $table->string('url_pdf')->nullable();
             $table->timestamps();
     
             $table->foreign('unemployed_id')->references('id')->on('unemployeds')->onDelete('cascade');

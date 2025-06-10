@@ -3,57 +3,66 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-2xl mx-auto">
+        
+        <!-- Título de la página -->
         <h1 class="text-2xl font-bold text-gray-800 mb-6">Crear Nueva Oferta de Trabajo</h1>
 
+        <!-- Formulario para crear una nueva oferta -->
         <form action="{{ route('job-offers.store') }}" method="POST" class="bg-white rounded-lg shadow-sm p-6">
-            @csrf
+            @csrf <!-- Token de seguridad CSRF -->
 
+            <!-- Campo para el título de la oferta -->
             <div class="mb-4">
                 <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
                 <input type="text" name="title" id="title" value="{{ old('title') }}" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
                 @error('title')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para el título -->
                 @enderror
             </div>
 
+            <!-- Campo para la descripción de la oferta -->
             <div class="mb-4">
                 <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
                 <textarea name="description" id="description" rows="4" 
                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>{{ old('description') }}</textarea>
                 @error('description')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para la descripción -->
                 @enderror
             </div>
 
+            <!-- Campo para el salario ofrecido -->
             <div class="mb-4">
                 <label for="salary" class="block text-sm font-medium text-gray-700">Salario</label>
                 <input type="number" name="salary" id="salary" value="{{ old('salary') }}" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 @error('salary')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para el salario -->
                 @enderror
             </div>
 
+            <!-- Campo para la ubicación de la oferta -->
             <div class="mb-4">
                 <label for="location" class="block text-sm font-medium text-gray-700">Ubicación</label>
                 <input type="text" name="location" id="location" value="{{ old('location') }}" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 @error('location')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para la ubicación -->
                 @enderror
             </div>
 
+            <!-- Campo para la geolocalización (coordenadas de Google Maps) -->
             <div class="mb-4">
                 <label for="geolocation" class="block text-sm font-medium text-gray-700">Geolocalización (Google Maps)</label>
                 <input type="text" name="geolocation" id="geolocation" value="{{ old('geolocation') }}" 
                        placeholder="Ejemplo: -12.0464,-77.0428" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 @error('geolocation')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para la geolocalización -->
                 @enderror
             </div>
 
+            <!-- Campo para seleccionar el tipo de oferta (Contrato o Clasificado) -->
             <div class="mb-4">
                 <label for="offer_type" class="block text-sm font-medium text-gray-700">Tipo de Oferta</label>
                 <select name="offer_type" id="offer_type" 
@@ -63,10 +72,11 @@
                     <option value="classified" {{ old('offer_type') == 'classified' ? 'selected' : '' }}>Clasificado</option>
                 </select>
                 @error('offer_type')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para el tipo de oferta -->
                 @enderror
             </div>
 
+            <!-- Sección para seleccionar las categorías relacionadas con la oferta -->
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Categorías</label>
                 <div class="border rounded-md border-gray-300 p-4" style="max-height: 200px; overflow-y: auto;">
@@ -85,10 +95,11 @@
                     </div>
                 </div>
                 @error('categories')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para las categorías -->
                 @enderror
             </div>
 
+            <!-- Botones de acción: Cancelar o Crear Oferta -->
             <div class="flex justify-end">
                 <a href="{{ route('job-offers.index') }}" 
                    class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors mr-4">

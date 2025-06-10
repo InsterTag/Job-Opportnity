@@ -12,14 +12,20 @@ class UnemployedController extends Controller
     }
 
     public function agg_unemployed(Request $request) {
-        $unemployed = new Unemployed();
-        $unemployed->user_id = Auth::id(); 
-        $unemployed->profession = $request->profession;
-        $unemployed->experience = $request->experience;
-        $unemployed->location = $request->location;
-        $unemployed->save();
-    
-        return redirect()->route('home'); // Redirigir después de guardar
-    }
+    $request->validate([
+        'profession' => ['required', 'string', 'max:255'],
+        'experience' => ['required', 'string'],
+        'location' => ['required', 'string', 'max:255'],
+    ]);
+
+    $unemployed = new Unemployed(); 
+    $unemployed->user_id = Auth::user()->id;
+    $unemployed->profession = $request->profession;
+    $unemployed->experience = $request->experience;
+    $unemployed->location = $request->location;
+    $unemployed->save();
+
+    return redirect()->route('home')->with('success', 'Usuario registrado correctamente.');
+}
     
 }
