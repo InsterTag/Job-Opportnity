@@ -17,6 +17,7 @@ return new class extends Migration
 
         $table->foreign('job_offer_id')->references('id')->on('job_offers')->onDelete('cascade');
         $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+        $table->timestamps();
         });
     }
 
