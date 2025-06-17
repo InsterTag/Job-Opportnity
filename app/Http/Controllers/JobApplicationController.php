@@ -6,17 +6,18 @@ use Illuminate\Http\Request;
 
 class JobApplicationController extends Controller
 {
-    public function create() {
-        return view('JobApplication-form');
-    }
+  public function agg_job_application(Request $request) {
+    $validatedData = $request->validate([
+        'message' => 'required|string|max:1000',
+        'job_offer_id' => 'required|integer|exists:job_offers,id'
+    ]);
 
-    public function agg_job_application(Request $request) {
-        $application = new JobApplication();
-        $application->message = $request->message;
-        $application->unemployed_id = $request->unemployed_id;
-        $application->job_offer_id = $request->job_offer_id;
-        $application->save();
+    $application = new JobApplication();
+    $application->message = $validatedData['message'];
+    $application->unemployed_id = Auth::id(); // Asigna el ID del usuario autenticado
+    $application->job_offer_id = $validatedData['job_offer_id'];
+    $application->save();
 
-        return $application;
-    }
+    return $application;
+}
 }

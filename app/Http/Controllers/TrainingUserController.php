@@ -11,9 +11,14 @@ class TrainingUserController extends Controller
     }
 
     public function agg_training_user(Request $request) {
+        $validatedData = $request->validate([
+            'training_id' => 'required|integer|exists:trainings,id',
+            'unemployed_id' => 'required|integer|exists:unemployeds,id'
+        ]);
+
         $relation = new TrainingUser();
-        $relation->training_id = $request->training_id;
-        $relation->unemployed_id = $request->unemployed_id;
+        $relation->training_id = $validatedData['training_id'];
+        $relation->unemployed_id = $validatedData['unemployed_id'];
         $relation->save();
 
         return $relation;
