@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Company;
 use App\Models\JobApplication;
 use App\Models\Comment;
-use App\Models\FavoriteOffer;
+use App\Models\Favorites;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\JobOfferCategory;
@@ -16,14 +16,9 @@ class JobOffer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company_id',
-        'title',
-        'description',
-        'salary',
-        'location',
-        'geolocation',
-        'offer_type'
-    ];
+    'title', 'description', 'salary', 'location', 'geolocation', 'company_id' // ← sin offer_type
+];
+
 
     protected $casts = [
         'salary' => 'decimal:2'
@@ -44,14 +39,14 @@ class JobOffer extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function FavoriteOffers()
+    public function favoritedBy()
     {
-        return $this->hasMany(FavoriteOffer::class);
+        return $this->morphToMany(Unemployed::class, 'favoritable', 'favorites');
     }
 
     public function Categories()
     {
-        return $this->belongsToMany(Category::class, 'job_offer_category');
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 
     public function getContractTypeAttribute($value)

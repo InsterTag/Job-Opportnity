@@ -17,7 +17,7 @@
                 <input type="text" name="title" id="title" value="{{ old('title') }}" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
                 @error('title')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para el título -->
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -27,7 +27,7 @@
                 <textarea name="description" id="description" rows="4" 
                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>{{ old('description') }}</textarea>
                 @error('description')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para la descripción -->
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -37,7 +37,7 @@
                 <input type="number" name="salary" id="salary" value="{{ old('salary') }}" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 @error('salary')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para el salario -->
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -47,7 +47,7 @@
                 <input type="text" name="location" id="location" value="{{ old('location') }}" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 @error('location')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para la ubicación -->
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -58,21 +58,7 @@
                        placeholder="Ejemplo: -12.0464,-77.0428" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 @error('geolocation')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para la geolocalización -->
-                @enderror
-            </div>
-
-            <!-- Campo para seleccionar el tipo de oferta (Contrato o Clasificado) -->
-            <div class="mb-4">
-                <label for="offer_type" class="block text-sm font-medium text-gray-700">Tipo de Oferta</label>
-                <select name="offer_type" id="offer_type" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
-                    <option value="">Seleccione un tipo de oferta</option>
-                    <option value="contract" {{ old('offer_type') == 'contract' ? 'selected' : '' }}>Contrato</option>
-                    <option value="classified" {{ old('offer_type') == 'classified' ? 'selected' : '' }}>Clasificado</option>
-                </select>
-                @error('offer_type')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para el tipo de oferta -->
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -95,7 +81,7 @@
                     </div>
                 </div>
                 @error('categories')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p> <!-- Mensaje de error para las categorías -->
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 

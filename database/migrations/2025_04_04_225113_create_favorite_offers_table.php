@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('favorite_offers', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('unemployed_id')->constrained('unemployeds')->onDelete('cascade');
-            $table->foreignId('job_offer_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('favoritable_id');
+            $table->string('favoritable_type');;
             $table->timestamp('added_at')->useCurrent();
             $table->timestamps();
-            
-            $table->primary(['unemployed_id', 'job_offer_id']);
+    
+            $table->unique(['unemployed_id', 'favoritable_id', 'favoritable_type']);
+            $table->index(['favoritable_id', 'favoritable_type']);
         });
     }
 

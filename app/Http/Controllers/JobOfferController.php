@@ -9,9 +9,11 @@ use App\Models\Category;
 
 class JobOfferController extends Controller
 {
+    // Mostrar listado de ofertas con filtros aplicables
     public function index(Request $request) {
         $query = JobOffer::with(['company', 'categories']);
 
+        // Filtro por palabra clave en título o descripción
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
@@ -19,116 +21,97 @@ class JobOfferController extends Controller
             });
         }
 
+        // Filtro por ubicación
         if ($request->filled('location')) {
             $query->where('location', $request->location);
         }
 
+        // Filtro por tipo de oferta (tiempo completo, parcial, etc.)
         if ($request->filled('offer_type')) {
             $query->where('offer_type', $request->offer_type);
         }
 
+        // Filtro por categoría
         if ($request->filled('category')) {
             $query->whereHas('categories', function($q) use ($request) {
                 $q->where('categories.id', $request->category);
             });
         }
 
+        // Paginación de resultados
         $jobOffers = $query->latest()->paginate(10);
         $categories = Category::all();
 
         return view('job-offers.index', compact('jobOffers', 'categories'));
     }
 
+    // Guardar oferta (desde formulario personalizado)
     public function agg_job_offer(Request $request) {
-        $validatedData = $request->validate([
-            'company_id' => 'required|integer|exists:companies,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'salary' => 'nullable|string|max:100',
-            'location' => 'required|string|max:255',
-            'geolocation' => 'nullable|string',
-            'offer_type' => 'required|in:full_time,part_time,contract,temporary,freelance',
-            'categories' => 'nullable|array',
-            'categories.*' => 'integer|exists:categories,id'
-        ]);
-
         $offer = new JobOffer();
-        $offer->company_id = $validatedData['company_id'];
-        $offer->title = $validatedData['title'];
-        $offer->description = $validatedData['description'];
-        $offer->salary = $validatedData['salary'];
-        $offer->location = $validatedData['location'];
-        $offer->geolocation = $validatedData['geolocation'];
-        $offer->offer_type = $validatedData['offer_type'];
+        $offer->company_id = $request->company_id;
+        $offer->title = $request->title;
+        $offer->description = $request->description;
+        $offer->salary = $request->salary;
+        $offer->location = $request->location;
+        $offer->geolocation = $request->geolocation;
+        $offer->offer_type = $request->offer_type;
         $offer->save();
-
-        if (!empty($validatedData['categories'])) {
-            $offer->categories()->attach($validatedData['categories']);
-        }
 
         return $offer;
     }
 
-    public function create() {
+    // Mostrar formulario de creación de oferta
+    public function create()
+    {
         $categories = Category::all();
         return view('job-offers.create', compact('categories'));
     }
 
-    public function store(Request $request) {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'salary' => 'nullable|string|max:100',
-            'location' => 'required|string|max:255',
-            'geolocation' => 'nullable|string',
-            'offer_type' => 'required|in:full_time,part_time,contract,temporary,freelance',
-            'categories' => 'nullable|array',
-            'categories.*' => 'integer|exists:categories,id'
-        ]);
-
-        $jobOffer = new JobOffer($validatedData);
+    // Guardar nueva oferta laboral
+    public function store(Request $request)
+    {
+        $jobOffer = new JobOffer($request->all());
         $jobOffer->company_id = Auth::user()->company->id;
         $jobOffer->save();
 
-        if (!empty($validatedData['categories'])) {
-            $jobOffer->categories()->attach($validatedData['categories']);
-        }
+        // Asociar categorías seleccionadas
+        $jobOffer->categories()->attach($request->categories);
 
-        return redirect()->route('job-offers.index')->with('success', 'Oferta laboral creada exitosamente.');
+        return redirect()->route('job-offers.index')
+                         ->with('success', 'Oferta laboral creada exitosamente.');
     }
 
-    public function show(JobOffer $jobOffer) {
+    // Mostrar detalles de una oferta
+    public function show(JobOffer $jobOffer)
+    {
         return view('job-offers.show', compact('jobOffer'));
     }
 
-    public function edit(JobOffer $jobOffer) {
+    // Mostrar formulario de edición
+    public function edit(JobOffer $jobOffer)
+    {
         $categories = Category::all();
         return view('job-offers.edit', compact('jobOffer', 'categories'));
     }
 
-    public function update(Request $request, JobOffer $jobOffer) {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'salary' => 'nullable|string|max:100',
-            'location' => 'required|string|max:255',
-            'geolocation' => 'nullable|string',
-            'offer_type' => 'required|in:full_time,part_time,contract,temporary,freelance',
-            'categories' => 'nullable|array',
-            'categories.*' => 'integer|exists:categories,id'
-        ]);
+    // Actualizar una oferta existente
+    public function update(Request $request, JobOffer $jobOffer)
+    {
+        $jobOffer->update($request->all());
 
-        $jobOffer->update($validatedData);
+        // Sincronizar nuevas categorías
+        $jobOffer->categories()->sync($request->categories);
 
-        if (isset($validatedData['categories'])) {
-            $jobOffer->categories()->sync($validatedData['categories']);
-        }
-
-        return redirect()->route('job-offers.show', $jobOffer)->with('success', 'Oferta laboral actualizada exitosamente.');
+        return redirect()->route('job-offers.show', $jobOffer)
+                         ->with('success', 'Oferta laboral actualizada exitosamente.');
     }
 
-    public function destroy(JobOffer $jobOffer) {
+    // Eliminar una oferta laboral
+    public function destroy(JobOffer $jobOffer)
+    {
         $jobOffer->delete();
-        return redirect()->route('job-offers.index')->with('success', 'Oferta laboral eliminada exitosamente.');
+
+        return redirect()->route('job-offers.index')
+                         ->with('success', 'Oferta laboral eliminada exitosamente.');
     }
 }
