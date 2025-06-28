@@ -13,7 +13,7 @@
                     <!-- Enlaces principales del menú -->
                     <a href="{{ route('home') }}" class="text-gray-600 hover:text-blue-600 transition-colors">Inicio</a>
                     <a href="{{ route('training.index') }}" class="text-gray-600 hover:text-blue-600 transition-colors">Capacitaciones</a>
-                    <a href="{{ route('job-offers.index', ['offer_type' => 'classified']) }}" class="text-gray-600 hover:text-blue-600 transition-colors">Clasificados</a>
+                    <a href="{{ route('classifieds.index') }}" class="text-gray-600 hover:text-blue-600 transition-colors">Clasificados</a>
                     <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">FAQs</a>
 
                     <!-- Ícono de notificaciones con contador -->
@@ -101,7 +101,7 @@
                     <!-- Repetición del menú para pantallas pequeñas -->
                     <a href="{{ route('home') }}" class="block text-gray-600 hover:text-blue-600">Inicio</a>
                     <a href="#" class="block text-gray-600 hover:text-blue-600">Capacitaciones</a>
-                    <a href="#" class="block text-gray-600 hover:text-blue-600">Clasificados</a>
+                    <a href="{{ route('classifieds.index') }}" class="block text-gray-600 hover:text-blue-600">Clasificados</a>
                     <a href="#" class="block text-gray-600 hover:text-blue-600">FAQs</a>
                     @if(auth()->user()->isUnemployed())
                         <a href="{{ route('portfolios.index') }}" class="block text-gray-600 hover:text-blue-600">Portafolio</a>

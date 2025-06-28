@@ -20,7 +20,7 @@ return new class extends Migration
         $table->unsignedBigInteger('job_offer_id')->nullable();
         $table->foreign('job_offer_id')->references('id')->on('job_offers')->onDelete('cascade');
 
-        $table->timestamp('applied_at')->useCurrent();
+        $table->timestamps();
         });
     }
 

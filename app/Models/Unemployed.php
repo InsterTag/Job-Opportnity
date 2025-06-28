@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\JobApplication;
 use App\Models\Portfolio;
-use App\Models\FavoriteOffer;
+use App\Models\Favorite;
 use App\Models\TrainingUser;
 
 class Unemployed extends Model
@@ -27,11 +27,21 @@ class Unemployed extends Model
         return $this->hasMany(Portfolio::class);
     }
 
-    public function favoriteOffers()
+    public function favorites()
     {
-        return $this->belongsToMany(JobOffer::class, 'favorite_offers', 'unemployed_id', 'job_offer_id')
-                    ->withTimestamps();
+    return $this->hasMany(Favorite::class);
     }
+
+    public function favoriteJobOffers()
+    {
+    return $this->morphedByMany(JobOffer::class, 'favoritable', 'favorites');
+    }
+
+    public function favoriteClassifieds()
+    {
+    return $this->morphedByMany(Classified::class, 'favoritable', 'favorites');
+    }
+        
 
     public function TrainingUsers()
     {

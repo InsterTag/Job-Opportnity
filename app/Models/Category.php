@@ -4,11 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\JobOffer;
+use App\Models\Classified;
 
 class Category extends Model
 {
-    public function JobOffers()
+    protected $fillable = ['name', 'slug', 'description'];
+
+    public function jobOffers()
     {
-        return $this->belongsToMany(JobOffer::class, 'job_offer_category');
+        return $this->morphedByMany(JobOffer::class, 'categorizable');
+    }
+    
+    public function classifieds()
+    {
+        return $this->morphedByMany(Classified::class, 'categorizable');
     }
 }
