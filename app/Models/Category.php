@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\JobOffer;
-use App\Models\Classifieds;
+use App\Models\Classified;
 
 class Category extends Model
 {
@@ -17,6 +17,6 @@ class Category extends Model
     
     public function classifieds()
     {
-        return $this->morphedByMany(Classifieds::class, 'categorizable');
+        return $this->morphedByMany(Classified::class, 'categorizable');
     }
 }

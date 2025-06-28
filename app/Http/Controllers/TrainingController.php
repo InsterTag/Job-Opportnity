@@ -43,7 +43,6 @@ class TrainingController extends Controller
     // Muestra el formulario de edición para una capacitación específica
     public function edit($id)
     {
-   
         $training = Training::findOrFail($id);
         return view('training.edit', compact('training'));
     }
