@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_offer_category', function (Blueprint $table) {
-            $table->unsignedBigInteger('job_offer_id');
-        $table->unsignedBigInteger('category_id');
-
-        $table->foreign('job_offer_id')->references('id')->on('job_offers')->onDelete('cascade');
-        $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+        Schema::create('categorizables', function (Blueprint $table) {
+            $table->id();
+        $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+        $table->unsignedBigInteger('categorizable_id');
+        $table->string('categorizable_type');
         $table->timestamps();
+    
+        // Optional index for better performance
+        $table->index(['categorizable_id', 'categorizable_type']);
         });
     }
 

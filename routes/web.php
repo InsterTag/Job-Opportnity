@@ -6,14 +6,16 @@ use App\Http\Controllers\UnemployedController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\JobOfferController;
-use App\Http\Controllers\FavoriteOfferController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\ClassifiedController;
+
 
 // Rutas públicas
 Route::view('/login', 'login')->name('login');
-Route::view('/home', 'home')->middleware('auth')->name('home');
+Route::view('/', 'home')->middleware('auth')->name('home');
 
 // Usuario
 Route::get('/register', [UserController::class, 'create'])->name('register');
@@ -53,9 +55,9 @@ Route::get('/joboffers/{jobOffer}/editar', [JobOfferController::class, 'edit'])-
 Route::put('/joboffers/{jobOffer}', [JobOfferController::class, 'update'])->name('job-offers.update');
 Route::delete('/joboffers/{jobOffer}', [JobOfferController::class, 'destroy'])->name('job-offers.destroy');
 
-// Favorite Offers
-Route::get('/favoriteOffer', [FavoriteOfferController::class, 'index'])->name('favorite-offers.index');
-Route::post('/ofertas/{jobOffer}/favorite', [FavoriteOfferController::class, 'toggle'])->name('job-offers.toggle-favorite');
+// // Favorite Offers
+// Route::get('/favoriteOffer', [FavoriteController::class, 'index'])->name('favorite-offers.index');
+// Route::post('/ofertas/{jobOffer}/favorite', [FavoriteController::class, 'toggle'])->name('job-offers.toggle-favorite');
 
 // Job Applications
 Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('job-applications.store');
@@ -71,3 +73,15 @@ Route::post('/capacitaciones', [TrainingController::class, 'store'])->name('trai
 Route::get('/capacitaciones/{id}/editar', [TrainingController::class, 'edit'])->name('training.edit');
 Route::put('/capacitaciones/{id}', [TrainingController::class, 'update'])->name('training.update');
 Route::delete('/capacitaciones/{id}', [TrainingController::class, 'destroy'])->name('training.destroy');
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('classifieds', ClassifiedController::class);
+});
+
+// corrigiendo esto
+// Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+Route::post('/favorites/classifieds/{classified}/toggle', [FavoriteController::class, 'toggleClassified'])->middleware(['auth'])->name('favorites.classifieds.toggle');
