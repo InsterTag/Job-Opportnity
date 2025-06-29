@@ -10,7 +10,7 @@
         @include('includes/headers/header-register') 
         <!-- Incluye el encabezado específico para la página de registro -->
 
-        <div class="main-content">
+        <div class="main-content mb-8">
             @yield('content') 
             <!-- Aquí se insertará el contenido de cada vista que extienda esta plantilla -->
         </div>
