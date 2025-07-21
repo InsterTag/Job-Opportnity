@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('salary', 10, 2)->nullable();
             $table->string('location')->nullable();
             $table->string('geolocation')->nullable(); // Google Maps string or coordinates
+            $table->enum('offer_type', ['contract', 'classified'])->default('contract'); // Tipo de oferta
             $table->timestamps();
 
             // Clave foránea (opcional, si tienes la tabla companies)
