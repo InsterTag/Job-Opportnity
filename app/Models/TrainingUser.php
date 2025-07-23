@@ -39,9 +39,9 @@ class TrainingUser extends Model
 
 
     
-    protected $allowIncluded = ['Unemployed', 'Training']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = ['unemployed', 'training']; 
+    protected $allowFilter = ['unemployed_id', 'training_id'];
+    protected $allowSort = ['unemployed_id', 'training_id'];
 
     public function scopeIncluded(Builder $query)
     {

@@ -16,10 +16,7 @@ class JobOffer extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-    'title', 'description', 'salary', 'location', 'geolocation', 'company_id' // ← sin offer_type
-];
-
+    protected $fillable = ['title', 'description', 'salary', 'location', 'geolocation', 'company_id'];
 
     protected $casts = [
         'salary' => 'decimal:2'
@@ -48,6 +45,11 @@ class JobOffer extends Model
     public function Categories()
     {
         return $this->morphToMany(Category::class, 'categorizable');
+    }
+
+    public function Notification()
+    {
+        return $this->hasMany(Notification::class);
     }
 
     public function getContractTypeAttribute($value)
@@ -96,9 +98,9 @@ class JobOffer extends Model
 
 
     
-    protected $allowIncluded = ['company', 'favorite', 'job_applications']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = ['company']; 
+    protected $allowFilter = ['title', 'description', 'salary', 'location', 'geolocation', 'company_id'];
+    protected $allowSort = ['title', 'description', 'salary', 'location', 'geolocation', 'company_id'];
 
     public function scopeIncluded(Builder $query)
     {

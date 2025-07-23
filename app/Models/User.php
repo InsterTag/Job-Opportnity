@@ -68,8 +68,8 @@ class User extends Authenticatable
 
 
     protected $allowIncluded = []; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowFilter = ['name', 'email', 'type'];
+    protected $allowSort = ['name', 'email', 'type'];
 
     public function scopeIncluded(Builder $query)
     {

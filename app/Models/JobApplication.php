@@ -35,9 +35,9 @@ class JobApplication extends Model
 
 
     
-    protected $allowIncluded = ['unemplloyed']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = ['unemployed', 'jobOffer']; 
+    protected $allowFilter = ['message', 'unemployed_id', 'job_offer_id'];
+    protected $allowSort = ['message', 'unemployed_id', 'job_offer_id'];
 
     public function scopeIncluded(Builder $query)
     {

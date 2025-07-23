@@ -10,9 +10,8 @@ class Portfolio extends Model
 {
 
     // Agregar 'unemployed_id' al array $fillable
-    protected $fillable = ['unemployed_id', 'title', 'description', 'url'];
+    protected $fillable = ['unemployed_id', 'title', 'description', 'url_proyect', 'url_pdf'];
 
-    
     public function Unemployed()
     {
         return $this->belongsTo(Unemployed::class);
@@ -36,8 +35,8 @@ class Portfolio extends Model
 
     
     protected $allowIncluded = ['unemployed']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowFilter = ['unemployed_id', 'title', 'description', 'url_proyect', 'url_pdf'];
+    protected $allowSort = ['unemployed_id', 'title', 'description', 'url_proyect', 'url_pdf'];
 
     public function scopeIncluded(Builder $query)
     {

@@ -68,8 +68,8 @@ class Unemployed extends Model
 
     
     protected $allowIncluded = ['user']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowFilter = ['user_id', 'profession', 'experience', 'location'];
+    protected $allowSort = ['user_id', 'profession', 'experience', 'location'];
 
     public function scopeIncluded(Builder $query)
     {

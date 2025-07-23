@@ -30,8 +30,8 @@ class Company extends Model
 
     
     protected $allowIncluded = ['user']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowFilter = ['user_id', 'company_name', 'description'];
+    protected $allowSort = ['user_id', 'company_name', 'description'];
 
     public function scopeIncluded(Builder $query)
     {

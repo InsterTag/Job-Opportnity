@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'description'];
 
     public function jobOffers()
     {
@@ -32,9 +32,9 @@ class Category extends Model
 
 
     
-    protected $allowIncluded = ['company', 'person', 'branch']; 
-    protected $allowFilter = ['company_id','branch_id','person_id','user_id','invoice_number','created_unix','payment_method','total','iva_total'];
-    protected $allowSort = ['company_id','branch_id','person_id','user_id','invoice_number','created_unix','payment_method','total','iva_total'];
+    protected $allowIncluded = []; 
+    protected $allowFilter = ['name', 'description'];
+    protected $allowSort = ['name', 'description'];
 
     public function scopeIncluded(Builder $query)
     {

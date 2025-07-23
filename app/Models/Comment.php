@@ -25,9 +25,9 @@ class Comment extends Model
 
 
     
-    protected $allowIncluded = ['classified', 'job_offer']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = ['unemployed', 'company']; 
+    protected $allowFilter = ['content', 'company_id' ,'unemployed_id'];
+    protected $allowSort = ['content', 'company_id' ,'unemployed_id'];
 
     public function scopeIncluded(Builder $query)
     {
