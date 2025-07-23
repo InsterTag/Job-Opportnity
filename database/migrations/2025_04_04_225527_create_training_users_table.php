@@ -17,6 +17,7 @@ return new class extends Migration
     
             $table->foreign('unemployed_id')->references('id')->on('unemployeds')->onDelete('cascade');
             $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
