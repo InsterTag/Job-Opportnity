@@ -35,9 +35,9 @@ class Favorite extends Model
 
 
     
-    protected $allowIncluded = ['company', 'person', 'branch']; 
-    protected $allowFilter = ['job_offer', 'classified'];
-    protected $allowSort = [];
+    protected $allowIncluded = ['unemployed']; 
+    protected $allowFilter = ['unemployed_id', 'favoritable_id', 'favoritable_type'];
+    protected $allowSort = ['unemployed_id', 'favoritable_id', 'favoritable_type'];
 
     public function scopeIncluded(Builder $query)
     {

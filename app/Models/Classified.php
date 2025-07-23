@@ -74,9 +74,9 @@ class Classified extends Model
 
 
     
-    protected $allowIncluded = ['favorites', 'company', 'unemoployed']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = ['company', 'unemoployed']; 
+    protected $allowFilter = ['title','description','location','geolocation','salary','company_id','unemployed_id',];
+    protected $allowSort = ['title','description','location', 'geolocation','salary','company_id','unemployed_id',];
 
     public function scopeIncluded(Builder $query)
     {

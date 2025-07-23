@@ -40,9 +40,9 @@ class Training extends Model
 
 
     
-    protected $allowIncluded = ['training_users']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = []; 
+    protected $allowFilter = ['title','description','link','provider','start_date','end_date'];
+    protected $allowSort = ['title','description','link','provider','start_date','end_date'];
 
     public function scopeIncluded(Builder $query)
     {

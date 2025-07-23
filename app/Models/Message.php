@@ -33,9 +33,9 @@ class Message extends Model
 
 
     
-    protected $allowIncluded = ['user']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = ['sender', 'receiver']; 
+    protected $allowFilter = ['sender_id', 'receiver_id', 'content', 'sent_at'];
+    protected $allowSort = ['sender_id', 'receiver_id', 'content', 'sent_at'];
 
     public function scopeIncluded(Builder $query)
     {

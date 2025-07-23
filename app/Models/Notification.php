@@ -13,6 +13,11 @@ class Notification extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function JobOffer()
+    {
+        return $this->belongsTo(JobOffer::class);
+    }
+
 
 
 
@@ -32,9 +37,9 @@ class Notification extends Model
 
 
     
-    protected $allowIncluded = ['user']; 
-    protected $allowFilter = [];
-    protected $allowSort = [];
+    protected $allowIncluded = ['user', 'jobOffer']; 
+    protected $allowFilter = ['user_id', 'job_offer_id', 'message', 'read'];
+    protected $allowSort = ['user_id', 'job_offer_id', 'message', 'read'];
 
     public function scopeIncluded(Builder $query)
     {
