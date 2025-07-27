@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
             UnemployedsTableSeeder::class,
             JobOffersTableSeeder::class,
             CategoriesTableSeeder::class,
-            JobOfferCategoryTableSeeder::class,
+            CategorizablesTableSeeder::class,
             JobApplicationsTableSeeder::class,
             FavoriteOffersTableSeeder::class,
             MessagesTableSeeder::class,

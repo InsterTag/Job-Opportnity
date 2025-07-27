@@ -16,11 +16,11 @@ return new class extends Migration
             $table->text('content');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->foreignId('unemployed_id')->constrained()->onDelete('cascade');
-            $table->unsignedBigInteger('commentable_id');
-            $table->string('commentable_type');
+
+            
             $table->timestamps();
     
-            $table->index(['commentable_id', 'commentable_type']);
+            
         });
     }
 

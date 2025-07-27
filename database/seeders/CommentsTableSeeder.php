@@ -13,14 +13,14 @@ class CommentsTableSeeder extends Seeder
     {
         $comments = [
             [
-                'user_id' => 2,
-                'job_offer_id' => 1,
+                'unemployed_id' => 2,
+                'company_id' => 1,
                 'content' => '¿Esta posición es remota?',
                 'created_at' => Carbon::now()->subDays(2)
             ],
             [
-                'user_id' => 1,
-                'job_offer_id' => 1,
+                'unemployed_id' => 1,
+                'company_id' => 1,
                 'content' => 'Ofrecemos modalidad híbrida',
                 'created_at' => Carbon::now()->subDay()
             ]
