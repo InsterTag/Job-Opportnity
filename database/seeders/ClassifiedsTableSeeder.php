@@ -79,7 +79,5 @@ class ClassifiedsTableSeeder extends Seeder
         ];
 
         DB::table('classifieds')->insert($classifieds);
-
-        $this->command->info('¡Seeder de classifieds completado con 5 registros realistas!');
     }
 }
