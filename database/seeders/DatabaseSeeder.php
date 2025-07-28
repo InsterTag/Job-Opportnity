@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             CompaniesTableSeeder::class,
             UnemployedsTableSeeder::class,
+            ClassifiedsTableSeeder::class,
             JobOffersTableSeeder::class,
             CategoriesTableSeeder::class,
             CategorizablesTableSeeder::class,
