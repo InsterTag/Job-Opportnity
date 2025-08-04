@@ -69,7 +69,14 @@ class JobOfferController extends Controller
 
     public function show(JobOffer $jobOffer)
     {
-        return redirect()->route('job-offers.index'); // Cambiado como pediste
+        $jobOffer->load(['company', 'categories']);
+        $isFavorite = false;
+
+        if (Auth::check() && Auth::user()->type === 'unemployed') {
+            $isFavorite = Auth::user()->unemployed->favoriteJobOffers()->where('favoritable_id', $jobOffer->id)->exists();
+        }
+
+        return view('job-offers.show', compact('jobOffer', 'isFavorite'));
     }
 
     public function edit(JobOffer $jobOffer)

@@ -38,11 +38,7 @@ class Classified extends Model
         return $this->belongsTo(Unemployed::class);
     }
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
+    
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categorizable');
