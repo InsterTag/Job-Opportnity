@@ -33,29 +33,6 @@
                         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
                     </a>
 
-                    <!-- Ícono de notificaciones con contador -->
-                    <div class="relative" id="notificationsDropdown">
-                        <button class="relative p-2 text-gray-600 hover:text-blue-800 hover:bg-blue-50 rounded-full transition-all duration-300 icon-bounce">
-                            <i class="fas fa-bell text-xl"></i>
-                            <!-- Contador de notificaciones -->
-                            <span id="notificationCount" class="absolute -top-1 -right-1 bg-gradient-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center shadow-lg">0</span>
-                        </button>
-                        <!-- Panel desplegable de notificaciones -->
-                        <div id="notificationPanel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-soft border border-gray-100 z-50 overflow-hidden">
-                            <div class="p-4 bg-gradient-to-r from-blue-50 to-purple-50 border-b flex justify-between items-center">
-                                <h3 class="text-lg font-semibold text-gray-800">Notificaciones</h3>
-                                <!-- Botón de configuración -->
-                                <button class="text-gray-400 hover:text-blue-600 p-1 rounded-full hover:bg-white transition-all duration-300">
-                                    <i class="fas fa-cog"></i>
-                                </button>
-                            </div>
-                            <!-- Lista de notificaciones dinámicas -->
-                            <div id="notificationList" class="max-h-96 overflow-y-auto">
-                                <!-- Aquí se cargarán las notificaciones -->
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Dropdown de usuario con su información y enlaces personalizados -->
                     <div class="relative" id="userDropdown">
                         <button id="userDropdownToggle" class="flex items-center text-gray-600 hover:text-blue-800 p-2 rounded-xl hover:bg-blue-50 transition-all duration-300">

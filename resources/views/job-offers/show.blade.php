@@ -45,13 +45,8 @@
                     <div class="flex flex-col items-end space-y-2">
                         @if(auth()->user()?->unemployed)
                             <button onclick="toggleFavorite(this, 'joboffer', {{ $jobOffer->id }})"
-                                class="favorite-btn {{ $isFavorite ? 'text-yellow-500' : 'text-gray-400' }} hover:text-yellow-600 transition-colors">
-                                <svg class="w-8 h-8 star-filled {{ $isFavorite ? '' : 'hidden' }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/>
-                                </svg>
-                                <svg class="w-8 h-8 star-outline {{ $isFavorite ? 'hidden' : '' }}" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/>
-                                </svg>
+                                class="favorite-btn w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover-lift {{ $isFavorite ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-400 hover:bg-blue-50 hover:text-blue-700' }}">
+                                <i class="fas fa-heart text-lg"></i>
                             </button>
                         @endif
 

@@ -2,51 +2,75 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <!-- Navegación -->
-    <div class="mb-6">
-        <a href="{{ route('classifieds.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-            Volver a clasificados
-        </a>
+    <!-- Header mejorado -->
+    <div class="mb-8 animate-fade-in-up">
+        <div class="bg-white rounded-2xl shadow-soft p-6">
+            <div class="flex items-center justify-between">
+                <a href="{{ route('classifieds.index') }}" class="btn-secondary text-white px-6 py-3 rounded-xl hover-lift flex items-center shadow-soft">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Volver a clasificados
+                </a>
+                
+                <!-- Botón de favoritos -->
+                @auth
+                    @if(auth()->user()->unemployed)
+                        @php
+                            $isOwner = auth()->user()->unemployed->id === $classified->unemployed_id;
+                        @endphp
+                        
+                        @if(!$isOwner)
+                            <button onclick="toggleFavorite(this, 'classified', {{ $classified->id }})"
+                                    class="favorite-btn w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover-lift {{ $isFavorite ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-400 hover:bg-blue-50 hover:text-blue-700' }}">
+                                <i class="fas fa-heart text-lg"></i>
+                            </button>
+                        @endif
+                    @endif
+                @endauth
+            </div>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Información principal -->
         <div class="lg:col-span-2">
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="card-enhanced p-8 mb-6 animate-fade-in-up">
                 <!-- Header -->
                 <div class="flex justify-between items-start mb-6">
                     <div class="flex-1">
-                        <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $classified->title }}</h1>
-                        <div class="flex items-center text-gray-600 mb-4">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-4">
+                            <i class="fas fa-bullhorn text-blue-700 mr-3"></i>
+                            {{ $classified->title }}
+                        </h1>
+                        
+                        <div class="flex items-center mb-4">
                             @if($classified->company)
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h3M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                </svg>
-                                <span class="text-lg font-semibold">{{ $classified->company->business_name ?? $classified->company->name }}</span>
-                                <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Empresa</span>
+                                <div class="w-12 h-12 gradient-primary rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-building text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-semibold text-gray-800">{{ $classified->company->business_name ?? $classified->company->name }}</p>
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Empresa verificada</span>
+                                </div>
                             @elseif($classified->unemployed)
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                <span class="text-lg font-semibold">{{ $classified->unemployed->name }}</span>
-                                <span class="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Persona</span>
+                                <div class="w-12 h-12 gradient-primary rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-semibold text-gray-800">{{ $classified->unemployed->name }}</p>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Usuario individual</span>
+                                </div>
                             @endif
                         </div>
-                        <div class="flex items-center text-gray-500 mb-2">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            <span>{{ $classified->location }}</span>
-                        </div>
-                        <div class="flex items-center text-gray-500">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <span>Publicado {{ $classified->created_at->diffForHumans() }}</span>
+                        
+                        <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-blue-700 mr-2"></i>
+                                <span>{{ $classified->location }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-gray-600 mr-2"></i>
+                                <span>Publicado {{ $classified->created_at->diffForHumans() }}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -59,13 +83,8 @@
                             
                             @if(!$isOwner)
                                 <button onclick="toggleFavorite(this, 'classified', {{ $classified->id }})"
-                                    class="favorite-btn {{ $isFavorite ? 'text-yellow-500' : 'text-gray-400' }} hover:text-yellow-600 transition-colors">
-                                    <svg class="w-8 h-8 star-filled {{ $isFavorite ? '' : 'hidden' }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/>
-                                    </svg>
-                                    <svg class="w-8 h-8 star-outline {{ $isFavorite ? 'hidden' : '' }}" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/>
-                                    </svg>
+                                    class="favorite-btn w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover-lift {{ $isFavorite ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-400 hover:bg-blue-50 hover:text-blue-700' }}">
+                                    <i class="fas fa-heart text-lg"></i>
                                 </button>
                             @endif
                         @endif

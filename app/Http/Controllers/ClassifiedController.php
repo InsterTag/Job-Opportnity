@@ -22,7 +22,7 @@ class ClassifiedController extends Controller
 
         if ($request->filled('category_id')) {
             $query->whereHas('categories', function ($q) use ($request) {
-                $q->where('id', $request->category_id);
+                $q->where('categories.id', $request->category_id);
             });
         }
 
