@@ -11,6 +11,7 @@ use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ClassifiedController;
+use App\Http\Controllers\NotificationController;
 
 
 // Rutas públicas
@@ -28,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
     Route::get('/message/create', [MessageController::class, 'create'])->name('message-form');
     Route::post('/message/send', [MessageController::class, 'send_message'])->name('send-message');
+    
+    // Notificaciones
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
+    Route::get('/notifications/unread-count', [NotificationController::class, 'getUnreadCount'])->name('notifications.unread-count');
 });
 
 // Unemployed
@@ -73,6 +79,8 @@ Route::post('/capacitaciones', [TrainingController::class, 'store'])->name('trai
 Route::get('/capacitaciones/{id}/editar', [TrainingController::class, 'edit'])->name('training.edit');
 Route::put('/capacitaciones/{id}', [TrainingController::class, 'update'])->name('training.update');
 Route::delete('/capacitaciones/{id}', [TrainingController::class, 'destroy'])->name('training.destroy');
+Route::get('/training/inscripciones', [App\Http\Controllers\TrainingController::class, 'inscripciones'])->name('training.inscripciones');
+
 
 
 

@@ -1,2 +1,201 @@
 @import 'tailwindcss';
 
+/* Estilos personalizados para mejorar el diseño */
+
+/* Gradientes personalizados - Paleta seria y profesional */
+.gradient-primary {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1f2937 100%);
+}
+
+.gradient-secondary {
+    background: linear-gradient(135deg, #374151 0%, #111827 100%);
+}
+
+.gradient-success {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+}
+
+.gradient-warning {
+    background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+}
+
+/* Sombras personalizadas */
+.shadow-soft {
+    box-shadow: 0 2px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-card {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-card:hover {
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Efectos de hover personalizados */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+}
+
+/* Botones mejorados - Tonos serios */
+.btn-primary {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1f2937 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1e40af 0%, #374151 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #374151 0%, #111827 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #4b5563 0%, #1f2937 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(55, 65, 81, 0.4);
+}
+
+/* Tarjetas mejoradas */
+.card-enhanced {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-enhanced:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Elementos decorativos - Tonos serios */
+.decorative-pattern {
+    background-image: 
+        radial-gradient(circle at 20px 80px, #1f2937 1px, transparent 1px),
+        radial-gradient(circle at 80px 20px, #374151 1px, transparent 1px),
+        radial-gradient(circle at 40px 40px, #4b5563 0.5px, transparent 0.5px);
+    background-size: 100px 100px;
+    opacity: 0.05;
+}
+
+/* Iconos con efectos */
+.icon-bounce {
+    transition: transform 0.3s ease;
+}
+
+.icon-bounce:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Headers mejorados */
+.header-glass {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000 !important;
+    position: sticky !important;
+    top: 0 !important;
+}
+
+/* Asegurar que todos los elementos del header estén por encima */
+header * {
+    z-index: inherit;
+}
+
+/* Animaciones personalizadas */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slide-in {
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Badges mejorados - Tonos serios */
+.badge-primary {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1f2937 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-secondary {
+    background: linear-gradient(135deg, #374151 0%, #111827 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Separadores decorativos - Tonos serios */
+.divider-gradient {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #374151, #1f2937, transparent);
+    border: none;
+    margin: 2rem 0;
+}
+
+/* Stats cards mejorados - Tonos serios */
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1e3a8a, #374151);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+

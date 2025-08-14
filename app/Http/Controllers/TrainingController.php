@@ -12,6 +12,10 @@ class TrainingController extends Controller
     {
         $trainings = Training::all();
         return view('training.index', compact('trainings'));
+        
+
+
+        
     }
 
     // Muestra el formulario de creación
@@ -77,4 +81,30 @@ class TrainingController extends Controller
         // Redirige con un mensaje de éxito
         return redirect()->route('training.index')->with('success', 'Capacitación eliminada correctamente.');
     }
+    
+
+public function inscribir(Request $request, $id)
+{
+    $request->validate([
+        'fecha_inscripcion' => 'required|date',
+        'completado' => 'required|boolean',
+        'cesante_id' => 'required|integer',
+    ]);
+
+    $training = Training::findOrFail($id);
+
+    $training->update([
+        'fecha_inscripcion' => $request->fecha_inscripcion,
+        'completado' => $request->completado,
+        'cesante_id' => $request->cesante_id,
+    ]);
+
+    return redirect()->route('training.inscripciones')->with('success', '¡Inscripción guardada!');
+}
+
+public function inscripciones()
+{
+    $trainings = Training::all();
+    return view('training.inscripciones', compact('trainings'));
+}
 }

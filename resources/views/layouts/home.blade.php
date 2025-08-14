@@ -7,13 +7,13 @@
 <!-- Inclusión de los enlaces comunes (CSS, favicon, etc.) -->
 @include('includes.links')
 
-<body class="bg-gray-100 text-gray-800"> <!-- Cuerpo de la página con fondo gris claro y texto gris oscuro -->
+    <body class="bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 text-gray-800 min-h-screen"> <!-- Fondo degradado con tonos grises y altura mínima de pantalla completa -->
 
     <!-- Inclusión del encabezado de perfil (barra superior personalizada) -->
     @include('includes/headers/header-profile')
 
     <!-- Contenido principal de la página -->
-    <div class="main-content">
+    <div class="main-content relative">
         @yield('content') <!-- Aquí se insertará el contenido específico de cada vista -->
     </div>
 

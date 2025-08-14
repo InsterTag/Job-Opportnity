@@ -22,7 +22,7 @@ class ClassifiedController extends Controller
 
         if ($request->filled('category_id')) {
             $query->whereHas('categories', function ($q) use ($request) {
-                $q->where('id', $request->category_id);
+                $q->where('categories.id', $request->category_id);
             });
         }
 
@@ -81,10 +81,10 @@ class ClassifiedController extends Controller
         $isFavorite = false;
 
         if (Auth::check() && Auth::user()->type === 'unemployed') {
-            $isFavorite = Auth::user()->unemployed->favoriteClassifieds()->where('classified_id', $id)->exists();
+            $isFavorite = Auth::user()->unemployed->favoriteClassifieds()->where('favoritable_id', $id)->exists();
         }
 
-        return view('classifieds.index', compact('classified', 'isFavorite'));
+        return view('classifieds.show', compact('classified', 'isFavorite'));
     }
 
     public function edit($id)

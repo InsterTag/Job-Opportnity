@@ -72,20 +72,62 @@
 
     {{-- Tipo de Usuario --}}
     <div class="mb-8">
-        <label for="type" class="block text-gray-700 font-semibold mb-2">Tipo de Usuario</label>
-        <select
-            name="type"
-            id="type"
-            required
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800
-                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-        >
-            <option value="" disabled selected>Seleccione una opción</option>
-            <option value="unemployed" {{ old('type') == 'unemployed' ? 'selected' : '' }}>Cesante</option>
-            <option value="company" {{ old('type') == 'company' ? 'selected' : '' }}>Empresa</option>
-        </select>
+        <label class="block text-gray-700 font-semibold mb-4">Tipo de Usuario</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {{-- Tarjeta Cesante --}}
+            <div class="user-type-card relative cursor-pointer" data-value="unemployed">
+                <input 
+                    type="radio" 
+                    name="type" 
+                    value="unemployed" 
+                    id="unemployed" 
+                    class="hidden" 
+                    {{ old('type') == 'unemployed' ? 'checked' : '' }}
+                    required
+                >
+                <label for="unemployed" class="block w-full cursor-pointer">
+                    <div class="border-2 border-gray-300 rounded-xl p-6 h-60 transition-all duration-300 hover:border-blue-400 hover:shadow-md flex items-center">
+                        <div class="text-center w-full">
+                            <div class="w-12 h-12 mx-auto mb-3 bg-blue-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Cesante</h3>
+                            <p class="text-sm text-gray-600 leading-snug">Busco oportunidades laborales y capacitaciones profesionales</p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            {{-- Tarjeta Empresa --}}
+            <div class="user-type-card relative cursor-pointer" data-value="company">
+                <input 
+                    type="radio" 
+                    name="type" 
+                    value="company" 
+                    id="company" 
+                    class="hidden" 
+                    {{ old('type') == 'company' ? 'checked' : '' }}
+                    required
+                >
+                <label for="company" class="block w-full cursor-pointer">
+                    <div class="border-2 border-gray-300 rounded-xl p-6 h-60 transition-all duration-300 hover:border-blue-400 hover:shadow-md flex items-center">
+                        <div class="text-center w-full">
+                            <div class="w-12 h-12 mx-auto mb-3 bg-green-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Empresa</h3>
+                            <p class="text-sm text-gray-600 leading-snug">Publico ofertas laborales, busco talento calificado y gestiono procesos de reclutamiento</p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
         @error('type')
-            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+            <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
         @enderror
     </div>
 
@@ -127,6 +169,45 @@
             `;
         }
     });
+
+    // Manejo de selección de tarjetas de tipo de usuario
+    const userTypeCards = document.querySelectorAll('.user-type-card');
+    const typeInputs = document.querySelectorAll('input[name="type"]');
+
+    // Función para actualizar estilos de las tarjetas
+    function updateCardStyles() {
+        userTypeCards.forEach(card => {
+            const input = card.querySelector('input[type="radio"]');
+            const cardDiv = card.querySelector('div[class*="border-2"]');
+            
+            if (input.checked) {
+                cardDiv.classList.remove('border-gray-300', 'bg-white');
+                cardDiv.classList.add('border-blue-600', 'bg-blue-100', 'shadow-xl');
+                cardDiv.classList.add('ring-4', 'ring-blue-300');
+            } else {
+                cardDiv.classList.remove('border-blue-600', 'bg-blue-100', 'shadow-xl');
+                cardDiv.classList.remove('ring-4', 'ring-blue-300');
+                cardDiv.classList.add('border-gray-300', 'bg-white');
+            }
+        });
+    }
+
+    // Agregar event listeners a las tarjetas
+    userTypeCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const input = this.querySelector('input[type="radio"]');
+            input.checked = true;
+            updateCardStyles();
+        });
+    });
+
+    // Agregar event listeners a los inputs radio
+    typeInputs.forEach(input => {
+        input.addEventListener('change', updateCardStyles);
+    });
+
+    // Inicializar estilos al cargar la página
+    updateCardStyles();
 </script>
 @endsection
     

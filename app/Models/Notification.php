@@ -18,25 +18,6 @@ class Notification extends Model
         return $this->belongsTo(JobOffer::class);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     protected $allowIncluded = ['user', 'jobOffer']; 
     protected $allowFilter = ['user_id', 'job_offer_id', 'message', 'read'];
     protected $allowSort = ['user_id', 'job_offer_id', 'message', 'read'];

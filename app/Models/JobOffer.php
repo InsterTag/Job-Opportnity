@@ -32,11 +32,7 @@ class JobOffer extends Model
         return $this->hasMany(JobApplication::class);
     }
 
-    public function Comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
+    
     public function favoritedBy()
     {
         return $this->morphToMany(Unemployed::class, 'favoritable', 'favorites');
