@@ -74,7 +74,7 @@ class Classified extends Model
 
 
     
-    protected $allowIncluded = ['company', 'unemoployed']; 
+    protected $allowIncluded = ['company', 'unemployed']; 
     protected $allowFilter = ['title','description','location','geolocation','salary','company_id','unemployed_id',];
     protected $allowSort = ['title','description','location', 'geolocation','salary','company_id','unemployed_id',];
 
