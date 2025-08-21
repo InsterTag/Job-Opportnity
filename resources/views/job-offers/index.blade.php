@@ -248,3 +248,5 @@ function toggleFavorite(button, type, id) {
 }
 </script>
 @endpush
+
+
