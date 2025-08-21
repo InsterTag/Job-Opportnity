@@ -4,7 +4,7 @@
             <!-- Logo de la aplicación con enlace a la página principal -->
             <a href="{{ route('home') }}" class="flex items-center group">
                 <div class="relative">
-                    <img src="Estilos/Imagenes/proyecto.jpeg" alt="Job Opportunity Logo" class="w-12 h-12 rounded-full mr-3 border-2 border-transparent group-hover:border-blue-500 transition-all duration-300">
+                    <img src="{{ asset('images/logo.png') }}" alt="Job Opportunity Logo" class="w-12 h-12 rounded-full mr-3 border-2 border-transparent group-hover:border-blue-500 transition-all duration-300">
                     <div class="absolute inset-0 rounded-full bg-gradient-primary opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                 </div>
                                     <span class="text-xl font-bold bg-gradient-to-r from-blue-800 to-gray-700 bg-clip-text text-transparent">
@@ -49,7 +49,7 @@
                         <button id="userDropdownToggle" class="flex items-center text-gray-600 hover:text-blue-800 p-2 rounded-xl hover:bg-blue-50 transition-all duration-300">
                             <!-- Imagen del usuario -->
                             <div class="relative">
-                                <img src="Estilos/Imagenes/proyecto2.jpeg" alt="Usuario" class="w-8 h-8 rounded-full mr-2 border-2 border-transparent hover:border-blue-300 transition-all duration-300">
+                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='8' r='3.5' fill='%23cbd5e1' /><path d='M12 14c-4 0-6 2-6 3v1h12v-1c0-1-2-3-6-3z' fill='%238b949e' /></svg>" alt="Usuario" class="w-8 h-8 rounded-full mr-2 border-2 border-transparent hover:border-blue-300 transition-all duration-300">
                                 <div class="absolute bottom-0 right-1 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
                             </div>
                             <div class="flex flex-col items-center">

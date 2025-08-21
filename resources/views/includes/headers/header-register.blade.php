@@ -6,7 +6,7 @@
                 <a href="" class="flex items-center group">
                     <!-- Imagen del logo -->
                     <div class="relative">
-                        <img src="Estilos/Imagenes/proyecto.jpeg" alt="Job Opportunity Logo" class="w-12 h-12 rounded-full mr-3 border-2 border-transparent group-hover:border-blue-500 transition-all duration-300">
+                        <img src="{{ asset('images/logo.png') }}" alt="Job Opportunity Logo" class="w-12 h-12 rounded-full mr-3 border-2 border-transparent group-hover:border-blue-500 transition-all duration-300">
                         <div class="absolute inset-0 rounded-full bg-gradient-primary opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                     </div>
                     <!-- Nombre de la aplicación -->
