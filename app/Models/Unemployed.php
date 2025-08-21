@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
 use App\Models\JobApplication;
 use App\Models\Portfolio;
@@ -12,11 +11,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Unemployed extends Model
 {
-
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
+    use HasFactory;
 
     public function JobApplications()
     {

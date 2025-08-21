@@ -7,17 +7,60 @@ use App\Models\Unemployed;
 use App\Models\JobOffer;
 use Illuminate\Database\Eloquent\Builder;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class JobApplication extends Model
 {
-    public function Unemployed()
+    use HasFactory;
+    public function unemployed()
     {
         return $this->belongsTo(Unemployed::class);
     }
 
-    public function JobOffer()
+    public function jobOffer()
     {
         return $this->belongsTo(JobOffer::class);
     }
+
+    // Relación con entrevistas
+    public function interviews()
+    {
+        return $this->hasMany(\App\Models\Interview::class);
+    }
+
+    // Accessor: URL pública al CV
+    public function getCvUrlAttribute()
+    {
+        return $this->cv_path ? asset('storage/' . $this->cv_path) : null;
+    }
+
+    // Accessor: Etiqueta amigable del estado
+    public function getStatusLabelAttribute()
+    {
+        $labels = [
+            'pending' => 'Pendiente',
+            'accepted' => 'Aceptada',
+            'rejected' => 'Rechazada',
+            'scheduled' => 'Programada',
+        ];
+        return $labels[$this->status] ?? ucfirst($this->status);
+    }
+
+    // Accessor: Clase CSS para badge según estado
+    public function getStatusBadgeClassAttribute()
+    {
+        $classes = [
+            'pending' => 'badge-warning',
+            'accepted' => 'badge-success',
+            'rejected' => 'badge-danger',
+            'scheduled' => 'badge-info',
+        ];
+        return $classes[$this->status] ?? 'badge-secondary';
+    }
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
 
 

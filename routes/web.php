@@ -65,8 +65,20 @@ Route::delete('/joboffers/{jobOffer}', [JobOfferController::class, 'destroy'])->
 // Route::get('/favoriteOffer', [FavoriteController::class, 'index'])->name('favorite-offers.index');
 // Route::post('/ofertas/{jobOffer}/favorite', [FavoriteController::class, 'toggle'])->name('job-offers.toggle-favorite');
 
-// Job Applications
-Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('job-applications.store');
+
+// Postulaciones (Job Applications)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/job-applications/create', [JobApplicationController::class, 'create'])->name('job-applications.create');
+    Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('job-applications.store');
+    Route::patch('/job-applications/{id}/status', [JobApplicationController::class, 'updateStatus'])->name('job-applications.update-status');
+    Route::get('/job-applications/company', [JobApplicationController::class, 'indexCompany'])->name('job-applications.index-company');
+    Route::get('/job-applications/unemployed', [JobApplicationController::class, 'indexUnemployed'])->name('job-applications.index-unemployed');
+    Route::get('/job-applications/{id}/download-cv', [JobApplicationController::class, 'downloadCv'])->name('job-applications.download-cv');
+
+    // Rutas para entrevistas (programar y ver)
+    Route::get('/interviews/{applicationId}', [\App\Http\Controllers\InterviewController::class, 'index'])->name('interviews.index');
+    Route::post('/interviews/{applicationId}', [\App\Http\Controllers\InterviewController::class, 'store'])->name('interviews.store');
+});
 
 // Companies
 Route::get('/Companies', [CompanyController::class, 'index'])->name('index');

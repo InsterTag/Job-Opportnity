@@ -41,13 +41,15 @@
                         </div>
                     </div>
 
-                    <!-- Acciones -->
+                    <!-- Acciones y formulario de postulación -->
                     <div class="flex flex-col items-end space-y-2">
                         @if(auth()->user()?->unemployed)
                             <button onclick="toggleFavorite(this, 'joboffer', {{ $jobOffer->id }})"
                                 class="favorite-btn w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover-lift {{ $isFavorite ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-400 hover:bg-blue-50 hover:text-blue-700' }}">
                                 <i class="fas fa-heart text-lg"></i>
                             </button>
+
+                            {{-- Formulario de postulación movido al sidebar --}}
                         @endif
 
                         @if(auth()->user()?->isCompany() && auth()->user()->company->id === $jobOffer->company_id)
@@ -155,16 +157,54 @@
                 </div>
             </div>
 
-            <!-- Botón de aplicar -->
+            <!-- Tarjeta de aplicar (solo visible para cesantes) -->
             @if(auth()->user()?->unemployed)
                 <div class="bg-white rounded-lg shadow-sm p-6">
-                    <form action="{{ route('job-applications.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="job_offer_id" value="{{ $jobOffer->id }}">
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
-                            Aplicar a esta oferta
-                        </button>
-                    </form>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Aplicar a esta oferta</h3>
+
+                    @if(session('success'))
+                        <div class="bg-green-100 text-green-800 p-2 rounded mb-2">{{ session('success') }}</div>
+                    @endif
+                    @if(session('error'))
+                        <div class="bg-red-100 text-red-800 p-2 rounded mb-2">{{ session('error') }}</div>
+                    @endif
+
+                    @php
+                        $existingApplication = $jobOffer->applications()->where('unemployed_id', auth()->user()->unemployed->id)->first();
+                    @endphp
+
+                    @if($existingApplication)
+                        <div class="mb-4">
+                            <div class="gradient-primary rounded-lg p-4 md:p-5 shadow-md overflow-hidden">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 flex-shrink-0">
+                                        <i class="fas fa-check text-white text-lg"></i>
+                                    </div>
+                                    <div class="flex-1 text-white">
+                                        <p class="font-semibold text-white leading-tight">Ya has postulado a esta oferta.</p>
+                                        @if($existingApplication->cv_url)
+                                            <a href="{{ $existingApplication->cv_url }}" target="_blank" class="inline-block mt-1 text-white/90 underline hover:text-white">Ver CV subido</a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <form action="{{ route('job-applications.store') }}" method="POST" enctype="multipart/form-data" class="space-y-3">
+                            @csrf
+                            <input type="hidden" name="unemployed_id" value="{{ auth()->user()->unemployed->id }}">
+                            <input type="hidden" name="job_offer_id" value="{{ $jobOffer->id }}">
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700">Mensaje (opcional)</label>
+                                <textarea name="message" id="message" rows="3" maxlength="2000" class="mt-1 block w-full border border-gray-200 rounded-md px-3 py-2"></textarea>
+                            </div>
+                            <div>
+                                <label for="cv" class="block text-sm font-medium text-gray-700">CV (opcional, PDF/DOC/DOCX, máx. 5MB)</label>
+                                <input type="file" name="cv" id="cv" accept=".pdf,.doc,.docx" class="mt-1 block w-full border border-gray-200 rounded px-2 py-1">
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors font-semibold">Postularme a esta oferta</button>
+                        </form>
+                    @endif
                 </div>
             @endif
         </div>
