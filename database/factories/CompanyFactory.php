@@ -17,6 +17,7 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => \App\Models\User::factory(),
             'name' => $this->faker->company,
             'email' => $this->faker->unique()->safeEmail,
             'logo' => $this->faker->imageUrl(100, 100, 'business'),

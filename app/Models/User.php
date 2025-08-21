@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 class User extends Authenticatable
 {
 
-    public function Company()
+    public function company()
     {
         return $this->hasOne(Company::class);
     }

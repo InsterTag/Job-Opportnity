@@ -18,11 +18,12 @@ class CompanyController extends Controller
             'description' => ['required', 'string'],
         ]);
 
-        $company = new Company();
-        $company->user_id = Auth::id(); // forma correcta y más simple que Auth::user()->id
-        $company->company_name = $request->company_name;
-        $company->description = $request->description;
-        $company->save();
+    $company = new Company();
+    $company->user_id = Auth::id();
+    $company->company_name = $request->company_name;
+    $company->name = $request->company_name;
+    $company->description = $request->description;
+    $company->save();
 
         return redirect()->route('home')->with('success', 'Empresa registrada correctamente.');
     }

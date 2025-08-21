@@ -17,11 +17,10 @@ class UnemployedFactory extends Factory
     public function definition(): array
     {
         return [
-        'user_id' => \App\Models\User::factory(),
-        'dni' => $this->faker->unique()->dni,
-        'birth_date' => $this->faker->date(),
-        'education_level' => $this->faker->randomElement(['Secundaria', 'Universitario']),
-        'unemployment_duration' => $this->faker->numberBetween(1, 12),
+            'user_id' => \App\Models\User::factory(),
+            'profession' => $this->faker->jobTitle,
+            'experience' => $this->faker->numberBetween(1, 10),
+            'location' => $this->faker->city,
         ];
     }
 }

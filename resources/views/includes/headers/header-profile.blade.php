@@ -78,7 +78,7 @@
                         <div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-soft border border-gray-100 z-50 overflow-hidden">
                             <!-- Opciones del menú -->
                             <div class="py-2">
-                                @if(auth()->user()->isUnemployed())
+                                @if(auth()->user()->isUnemployed() && auth()->user()->unemployed)
                                     <!-- Opción para ver el portafolio si es cesante -->
                                     <a href="{{ route('portfolios.index') }}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors">
                                         <i class="fas fa-briefcase mr-3 w-4 text-blue-600"></i>
@@ -88,6 +88,14 @@
                                         <i class="fas fa-search mr-3 w-4 text-blue-600"></i>
                                         Buscar Empleos
                                     </a>
+                                    <a href="{{ route('job-applications.index-unemployed') }}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors">
+                                        <i class="fas fa-file-alt mr-3 w-4 text-blue-600"></i>
+                                        Mis postulaciones a ofertas
+                                    </a>
+                                    <a href="{{ route('classifieds.index') }}?postulaciones=1" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors">
+                                        <i class="fas fa-list-alt mr-3 w-4 text-blue-600"></i>
+                                        Mis postulaciones a clasificados
+                                    </a>
                                 @endif
                                 @if(auth()->user()->isCompany())
                                     <!-- Opción para gestionar ofertas si es empresa -->
@@ -95,8 +103,12 @@
                                         <i class="fas fa-plus-circle mr-3 w-4 text-blue-600"></i>
                                         Gestionar Ofertas
                                     </a>
+                                    <a href="{{ route('job-applications.index-company') }}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors">
+                                        <i class="fas fa-clipboard-list mr-3 w-4 text-blue-600"></i>
+                                        Gestionar Postulaciones
+                                    </a>
                                     <a href="{{ route('job-offers.create') }}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors">
-                                        <i class="fas fa-file-plus mr-3 w-4 text-blue-600"></i>
+                                        <i class="fas fa-plus mr-3 w-4 text-blue-600"></i>
                                         Crear Nueva Oferta
                                     </a>
                                 @endif

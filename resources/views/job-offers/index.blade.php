@@ -37,13 +37,23 @@
     <div class="grid grid-cols-1 gap-6 animate-slide-in">
         @forelse($jobOffers as $jobOffer)
             <div class="card-enhanced hover-lift p-6">
+                @php
+                    $hasApplied = false;
+                    if (auth()->check() && auth()->user()?->unemployed) {
+                        try {
+                            $hasApplied = $jobOffer->applications()->where('unemployed_id', auth()->user()->unemployed->id)->exists();
+                        } catch (\Throwable $e) {
+                            $hasApplied = false;
+                        }
+                    }
+                @endphp
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex-1">
                                 <h2 class="text-xl font-semibold text-gray-800 mb-2">
-                                    <a href="{{ route('job-offers.show', $jobOffer->id) }}" class="hover:text-blue-800 transition-colors flex items-center">
-                                        <i class="fas fa-arrow-right text-blue-700 mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                    <a href="{{ route('job-offers.show', $jobOffer->id) }}" class="hover:text-blue-800 transition-colors flex items-center group">
+                                        <i class="fas fa-arrow-right text-blue-700 mr-2 opacity-0 group-hover:opacity-100 transition-opacity transform transition-transform duration-200 -translate-x-1 group-hover:translate-x-0"></i>
                                         {{ $jobOffer->title }}
                                     </a>
                                 </h2>
@@ -138,12 +148,19 @@
                             </div>
                         @endif
 
-                        <!-- Botón ver más -->
-                        <a href="{{ route('job-offers.show', $jobOffer->id) }}" 
-                           class="mt-3 btn-primary text-white px-6 py-2 rounded-xl hover-lift transition-all duration-300 text-sm font-medium shadow-soft">
-                            <i class="fas fa-eye mr-1"></i>
-                            Ver Detalles
-                        </a>
+                        <!-- Si ya aplicó, mostrar botón deshabilitado con mismo estilo; si no, mostrar Ver Detalles -->
+                        @if(auth()->check() && auth()->user()?->unemployed && $hasApplied)
+                            <button disabled class="mt-3 btn-primary text-white px-6 py-2 rounded-xl transition-all duration-300 text-sm font-medium shadow-soft w-full flex items-center justify-center pointer-events-none cursor-not-allowed">
+                                <i class="fas fa-check mr-2"></i>
+                                Ya te postulaste
+                            </button>
+                        @else
+                            <a href="{{ route('job-offers.show', $jobOffer->id) }}" 
+                               class="mt-3 btn-primary text-white px-6 py-2 rounded-xl hover-lift transition-all duration-300 text-sm font-medium shadow-soft">
+                                <i class="fas fa-eye mr-1"></i>
+                                Ver Detalles
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

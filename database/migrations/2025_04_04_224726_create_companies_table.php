@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('company_name');
+            $table->string('name');
+            $table->string('email')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('website')->nullable();
+            $table->string('company_name')->nullable();
             $table->text('description')->nullable();
-             // Clave foránea con eliminación en cascada
+            // Clave foránea con eliminación en cascada
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

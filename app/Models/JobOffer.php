@@ -22,12 +22,18 @@ class JobOffer extends Model
         'salary' => 'decimal:2'
     ];
 
-    public function Company()
+    public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
     public function JobApplications()
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
+    // Alias en minúsculas para compatibilidad con vistas y convenciones
+    public function applications()
     {
         return $this->hasMany(JobApplication::class);
     }
