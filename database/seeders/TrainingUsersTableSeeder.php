@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Training;
+use App\Models\Unemployed;
 
 class TrainingUsersTableSeeder extends Seeder
 {
@@ -12,14 +14,16 @@ class TrainingUsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $trainingUsers = [
-            ['unemployed_id' => 1, 'training_id' => 1],
-            ['unemployed_id' => 2, 'training_id' => 2],
-            ['unemployed_id' => 3, 'training_id' => 3],
-            ['unemployed_id' => 4, 'training_id' => 4]
+        $trainings = Training::all();
+        $unemployeds = Unemployed::all();
+        $prepared = [];
 
-        ];
+        foreach ($trainings as $index => $training) {
+            $unemployed = $unemployeds->get($index);
+            if (!$unemployed) continue;
+            $prepared[] = ['unemployed_id' => $unemployed->id, 'training_id' => $training->id];
+        }
 
-        DB::table('training_users')->insert($trainingUsers);
+        DB::table('training_users')->insertOrIgnore($prepared);
     }
 }

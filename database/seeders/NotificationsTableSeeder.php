@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Notification;
+use App\Models\User;
+use App\Models\JobOffer;
+use Illuminate\Support\Facades\DB;
 
 class NotificationsTableSeeder extends Seeder
 {
@@ -48,9 +51,30 @@ class NotificationsTableSeeder extends Seeder
 
         ];
 
-        foreach ($notifications as $notification) {
-            Notification::create($notification);
+        $users = User::all();
+        $offers = JobOffer::all();
+        $prepared = [];
+
+        $pairs = [
+            [1,0], [3,1], [5,2], [7,3], [0,0]
+        ];
+
+        foreach ($notifications as $i => $notification) {
+            $user = $users->get($pairs[$i][0]) ?? $users->first();
+            $offer = $offers->get($pairs[$i][1]) ?? $offers->first();
+            if (!$user || !$offer) continue;
+
+            $prepared[] = [
+                'user_id' => $user->id,
+                'job_offer_id' => $offer->id,
+                'message' => $notification['message'],
+                'read' => $notification['read'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
+
+        DB::table('notifications')->insertOrIgnore($prepared);
     }
 }
 //NOTIFICATIONS, 

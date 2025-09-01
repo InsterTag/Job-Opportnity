@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Company;
+use App\Models\User;
 
 class CompaniesTableSeeder extends Seeder
 {
@@ -49,7 +50,21 @@ class CompaniesTableSeeder extends Seeder
             ]
         ];
 
-        foreach ($companies as $company) {
+        foreach ($companies as $index => $company) {
+            // Intentar resolver el user_id buscando el usuario de tipo company creado en UsersTableSeeder
+            $expectedEmail = 'empresa' . ($index + 1) . '@example.com';
+            $user = User::where('email', $expectedEmail)->first();
+            if (!$user) {
+                // Si no existe el usuario esperado, buscamos cualquier usuario de tipo company
+                $user = User::where('type', 'company')->first();
+            }
+
+            if (!$user) {
+                // Saltar si no hay usuario company disponible
+                continue;
+            }
+
+            $company['user_id'] = $user->id;
             Company::create($company);
         }
     }

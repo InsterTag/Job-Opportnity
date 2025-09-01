@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Portfolio;
+use App\Models\Unemployed;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PortfoliosTableSeeder extends Seeder
 {
@@ -34,8 +36,23 @@ class PortfoliosTableSeeder extends Seeder
 
         ];
 
-        foreach ($portfolios as $portfolio) {
-            Portfolio::create($portfolio);
+        $prepared = [];
+        $first = Unemployed::first();
+        $second = Unemployed::skip(1)->first();
+
+        if ($first) {
+            $p = $portfolios[0];
+            $p['unemployed_id'] = $first->id;
+            $p['updated_at'] = now();
+            $prepared[] = $p;
         }
+        if ($second) {
+            $p = $portfolios[1];
+            $p['unemployed_id'] = $second->id;
+            $p['updated_at'] = now();
+            $prepared[] = $p;
+        }
+
+        DB::table('portfolios')->insertOrIgnore($prepared);
     }
 }

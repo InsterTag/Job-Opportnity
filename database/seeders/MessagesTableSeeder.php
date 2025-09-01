@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Message;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MessagesTableSeeder extends Seeder
 {
@@ -53,8 +55,29 @@ class MessagesTableSeeder extends Seeder
 
         ];
 
-        foreach ($messages as $message) {
-            Message::create($message);
+        $users = User::all();
+        $prepared = [];
+
+        // Emparejar usuarios por índice para simular conversaciones
+        $pairs = [
+            [0,1], [1,0], [2,3], [3,2], [4,5], [5,4]
+        ];
+
+        foreach ($pairs as $i => $pair) {
+            $sender = $users->get($pair[0]);
+            $receiver = $users->get($pair[1]);
+            if (!$sender || !$receiver) continue;
+
+            $prepared[] = [
+                'sender_id' => $sender->id,
+                'receiver_id' => $receiver->id,
+                'content' => $messages[$i]['content'] ?? 'Mensaje de prueba',
+                'sent_at' => $messages[$i]['sent_at'] ?? Carbon::now()->subDays(1),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
+
+        DB::table('messages')->insertOrIgnore($prepared);
     }
 }

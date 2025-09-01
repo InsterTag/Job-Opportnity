@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Unemployed;
+use App\Models\User;
 
 class UnemployedsTableSeeder extends Seeder
 {
@@ -41,8 +42,19 @@ class UnemployedsTableSeeder extends Seeder
 
         ];
 
-        foreach ($unemployeds as $unemployed) {
-            Unemployed::create($unemployed);
+        foreach ($unemployeds as $index => $unemployed) {
+            $expectedEmail = 'candidato' . ($index + 1) . '@example.com';
+            $user = User::where('email', $expectedEmail)->first();
+            if (!$user) {
+                $user = User::where('type', 'unemployed')->skip($index)->first();
+            }
+
+            if (!$user) {
+                continue;
+            }
+
+            $unemployed['user_id'] = $user->id;
+            Unemployed::firstOrCreate(['user_id' => $user->id], $unemployed);
         }
     }
 }

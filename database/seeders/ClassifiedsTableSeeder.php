@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use App\Models\Company;
+use App\Models\Unemployed;
 
 class ClassifiedsTableSeeder extends Seeder
 {
@@ -11,7 +14,7 @@ class ClassifiedsTableSeeder extends Seeder
     {
         DB::table('classifieds')->truncate();
 
-        $classifieds = [
+    $classifieds = [
             // 1. Oferta de empresa Tech Solutions SAS (relacionada con company_id 1)
             [
                 'title' => 'Desarrollador Backend Laravel',
@@ -19,7 +22,7 @@ class ClassifiedsTableSeeder extends Seeder
                 'salary' => 3800000,
                 'location' => 'Bogotá',
                 'geolocation' => '4.710989,-74.072092',
-                'company_id' => 1,
+                'company_id' => null,
                 'unemployed_id' => null,
                 'created_at' => now()->subDays(10),
                 'updated_at' => now()->subDays(5),
@@ -33,7 +36,7 @@ class ClassifiedsTableSeeder extends Seeder
                 'location' => 'Medellín',
                 'geolocation' => '6.244203,-75.581211',
                 'company_id' => null,
-                'unemployed_id' => 2,
+                'unemployed_id' => null,
                 'created_at' => now()->subDays(7),
                 'updated_at' => now()->subDays(2),
             ],
@@ -45,7 +48,7 @@ class ClassifiedsTableSeeder extends Seeder
                 'salary' => 4500000,
                 'location' => 'Cali',
                 'geolocation' => '3.451647,-76.531985',
-                'company_id' => 3,
+                'company_id' => null,
                 'unemployed_id' => null,
                 'created_at' => now()->subDays(15),
                 'updated_at' => now()->subDays(3),
@@ -59,7 +62,7 @@ class ClassifiedsTableSeeder extends Seeder
                 'location' => 'Popayán',
                 'geolocation' => '2.444814,-76.614739',
                 'company_id' => null,
-                'unemployed_id' => 4,
+                'unemployed_id' => null,
                 'created_at' => now()->subDays(3),
                 'updated_at' => now(),
             ],
@@ -71,13 +74,42 @@ class ClassifiedsTableSeeder extends Seeder
                 'salary' => 4200000,
                 'location' => 'Bogotá',
                 'geolocation' => '4.647618,-74.108133',
-                'company_id' => 4,
+                'company_id' => null,
                 'unemployed_id' => null,
                 'created_at' => now()->subDays(20),
                 'updated_at' => now()->subDays(10),
             ]
         ];
 
-        DB::table('classifieds')->insert($classifieds);
+        $prepared = [];
+        foreach ($classifieds as $item) {
+            // intentar resolver company por nombre (simple match) si es aplicable
+            if (isset($item['company_id']) && $item['company_id'] === null && isset($item['title'])) {
+                // heurística: buscar company por parte del title->company mapping
+                if (Str::contains($item['title'], 'Laravel') || Str::contains($item['title'], 'Desarrollador')) {
+                    $company = Company::where('name', 'like', '%Tech Solutions%')->first();
+                } elseif (Str::contains($item['title'], 'Supervisor') || Str::contains($item['title'], 'Obra')) {
+                    $company = Company::where('name', 'like', '%Construcciones%')->first();
+                } elseif (Str::contains($item['title'], 'Jefe de Cocina') || Str::contains($item['title'], 'Chef')) {
+                    $company = Company::where('name', 'like', '%Restaurante%')->first();
+                } else {
+                    $company = Company::first();
+                }
+
+                $item['company_id'] = $company ? $company->id : null;
+            }
+
+            // intentar resolver unemployed por location/profession simple si es aplicable
+            if (isset($item['unemployed_id']) && $item['unemployed_id'] === null) {
+                // buscar cualquier unemployed disponible si el classified es servicio
+                $unemployed = Unemployed::first();
+                $item['unemployed_id'] = $unemployed ? $unemployed->id : null;
+            }
+
+            $prepared[] = $item;
+        }
+
+        // Insertar evitando fallos por FK con insertOrIgnore
+        DB::table('classifieds')->insertOrIgnore($prepared);
     }
 }

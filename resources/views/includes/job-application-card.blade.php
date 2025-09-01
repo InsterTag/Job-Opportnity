@@ -61,7 +61,9 @@
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <a href="{{ route('interviews.index', $application->id) }}" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm">Ver horarios</a>
+                        @if($application->status === 'accepted')
+                            <a href="{{ route('interviews.index', $application->id) }}" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm">Ver horarios</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -129,7 +131,7 @@
                                 @endif
                             @endif
 
-                            @if(auth()->user()?->isUnemployed() && auth()->user()->unemployed->id === $application->unemployed_id)
+                            @if(auth()->user()?->isUnemployed() && auth()->user()->unemployed->id === $application->unemployed_id && $application->status === 'accepted')
                                 <a href="{{ route('interviews.index', $application->id) }}" class="bg-indigo-600 text-white px-3 py-1 rounded text-sm">Ver horarios</a>
                             @endif
                         </div>
