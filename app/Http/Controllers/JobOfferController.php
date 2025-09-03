@@ -37,8 +37,12 @@ class JobOfferController extends Controller
 
     // Guardar desde AJAX personalizado
     public function agg_job_offer(Request $request) {
+        if (!Auth::check() || !Auth::user()->company) {
+            abort(403, 'No autorizado.');
+        }
+
         $offer = new JobOffer();
-        $offer->company_id = $request->company_id;
+        $offer->company_id = Auth::user()->company->id; 
         $offer->title = $request->title;
         $offer->description = $request->description;
         $offer->salary = $request->salary;
@@ -81,12 +85,20 @@ class JobOfferController extends Controller
 
     public function edit(JobOffer $jobOffer)
     {
+        // Solo la empresa creadora puede editar
+        if (!Auth::check() || !Auth::user()->company || Auth::user()->company->id !== $jobOffer->company_id) {
+            abort(403, 'No tienes permiso para editar esta oferta.');
+        }
         $categories = Category::all();
         return view('job-offers.edit', compact('jobOffer', 'categories'));
     }
 
     public function update(Request $request, JobOffer $jobOffer)
     {
+        // Solo la empresa creadora puede actualizar
+        if (!Auth::check() || !Auth::user()->company || Auth::user()->company->id !== $jobOffer->company_id) {
+            abort(403, 'No tienes permiso para actualizar esta oferta.');
+        }
         $jobOffer->update($request->except('offer_type')); // Excluir campo eliminado
         $jobOffer->categories()->sync($request->categories);
 
@@ -96,6 +108,10 @@ class JobOfferController extends Controller
 
     public function destroy(JobOffer $jobOffer)
     {
+        // Solo la empresa creadora puede eliminar
+        if (!Auth::check() || !Auth::user()->company || Auth::user()->company->id !== $jobOffer->company_id) {
+            abort(403, 'No tienes permiso para eliminar esta oferta.');
+        }
         $jobOffer->delete();
 
         return redirect()->route('job-offers.index')

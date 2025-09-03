@@ -128,8 +128,8 @@
                             </p>
                         </div>
 
-                        <!-- Botones de acción para empresas -->
-                        @if(auth()->user()?->isCompany())
+                        <!-- Botones de acción solo para la empresa propietaria -->
+                        @if(auth()->user()?->isCompany() && auth()->user()?->company && auth()->user()->company->id === $jobOffer->company_id)
                             <div class="flex space-x-2">
                                 <a href="{{ route('job-offers.edit', $jobOffer->id) }}" 
                                    class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-4 py-2 rounded-xl hover-lift transition-all duration-300 text-sm font-medium shadow-soft">
